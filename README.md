@@ -40,7 +40,7 @@ function uploadImage() {
         if (data.filename) {
             displayImage(data.filename); // calls displayImage()
         }
-        fileInput.value = ''; // Clear the file input after upload
+        fileInput.value = ''; 
     })
     .catch(error => {
         console.error('Error uploading image:', error);
