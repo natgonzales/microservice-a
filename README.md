@@ -17,6 +17,7 @@ To retrive an image, specify the image's file name, and send a GET request to th
 #### Example Call
 This is an example call using JavaScript with Fetch API.
 
+```javascript
 // Request to retrieve an image
 function retrieveImage(filename) {
     fetch(`http://127.0.0.1:5000/images/${filename}`)
