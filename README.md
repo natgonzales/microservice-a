@@ -44,7 +44,7 @@ function retrieveImage(filename) {
 }
 
 // Example call to retrieve an image named "example.jpg"
-retrieveImage("example.jpg");
+retrieveImage("example.jpg"); ```
 
 ### Receiving Data
 
