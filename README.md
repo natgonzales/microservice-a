@@ -18,33 +18,36 @@ To retrive an image, specify the image's file name, and send a GET request to th
 This is an example call using JavaScript with Fetch API.
 
 ```javascript
-// Request to retrieve an image
-function retrieveImage(filename) {
-    fetch(`http://127.0.0.1:5000/images/${filename}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            // Create an object URL from the blob
-            const objectURL = URL.createObjectURL(blob);
-            
-            // Display the image in the UI
-            const imgElement = document.createElement('img');
-            imgElement.src = objectURL;
-            imgElement.alt = filename;
-            document.body.appendChild(imgElement);
-        })
-        .catch(error => {
-            console.error('Error retrieving image:', error);
-            alert('Error retrieving image. Please try again.');
-        });
-}
+function uploadImage() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
 
-// Example call to retrieve an image named "example.jpg"
-retrieveImage("example.jpg"); ```
+    if (!file) {
+        alert('Please select an image to upload.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.filename) {
+            displayImage(data.filename); // calls displayImage()
+        }
+        fileInput.value = ''; // Clear the file input after upload
+    })
+    .catch(error => {
+        console.error('Error uploading image:', error);
+        alert('Error uploading image. Please try again.');
+    });
+}
+```
 
 ### Receiving Data
 
