@@ -40,7 +40,7 @@ function uploadImage() {
         if (data.filename) {
             displayImage(data.filename); // calls displayImage()
         }
-        fileInput.value = ''; 
+        fileInput.value = ''; // Clear the file input after upload
     })
     .catch(error => {
         console.error('Error uploading image:', error);
@@ -53,6 +53,21 @@ function uploadImage() {
 
 Receiving data from the microservices involves how the server is handling the HTTP requests.
 
-For uploading images, the microservice will respond with a JSON object that includes a message that indcates whether the upload was successful or not. This is already included in the image_server.py file. To handle this response, you need to parse the JSON to extract and display the message.
-
 For the get image request, the microservice will respond with the image file if it exists. It will be sent using Flask's send_file() function. The image can be displayed by setting the src attribute of an image element to the URL of the retrieved image. 
+
+#### Example Call
+The responses are already integrated in the Flask app.
+
+Below are the responses for the upload route:
+```javascript
+function displayImage(imageName) {
+    const imageContainer = document.getElementById('imageContainer');
+    const img = document.createElement('img');
+    img.src = `http://127.0.0.1:5000/images/${imageName}`;
+    img.alt = imageName;
+    img.style.maxWidth = '100%'; // fit in container
+    imageContainer.innerHTML = ''; // Clear previous images
+    imageContainer.appendChild(img);
+}
+```
+
