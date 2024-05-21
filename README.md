@@ -14,6 +14,37 @@ To upload an image, create a form data object to hold the image file. Then, send
 
 To retrive an image, specify the image's file name, and send a GET request to the /images/<filename> endpoint of the microservice. Replace <filename> with the actual file name of the image.
 
+#### Example Call
+This is an example call using JavaScript with Fetch API.
+
+// Request to retrieve an image
+function retrieveImage(filename) {
+    fetch(`http://127.0.0.1:5000/images/${filename}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create an object URL from the blob
+            const objectURL = URL.createObjectURL(blob);
+            
+            // Display the image in the UI
+            const imgElement = document.createElement('img');
+            imgElement.src = objectURL;
+            imgElement.alt = filename;
+            document.body.appendChild(imgElement);
+        })
+        .catch(error => {
+            console.error('Error retrieving image:', error);
+            alert('Error retrieving image. Please try again.');
+        });
+}
+
+// Example call to retrieve an image named "example.jpg"
+retrieveImage("example.jpg");
+
 ### Receiving Data
 
 Receiving data from the microservices involves how the server is handling the HTTP requests.
